@@ -1,0 +1,76 @@
+name: Find Workflows Awaiting Approval
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/find-workflows-awaiting.ya?ml"
+  pull_request:
+    paths:
+      - ".github/workflows/find-workflows-awaiting.ya?ml"
+  schedule:
+    # Run hourly.
+    - cron: "0 * * * *"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+
+    env:
+      SCRIPT_PATH: workflowsawaiting
+
+    steps:
+      - name: Set environment variables
+        run: |
+          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          echo "REPORT_PATH=${{ runner.temp }}/report.json" >> "$GITHUB_ENV"
+
+      - name: Checkout repository to get the configuration file
+        uses: actions/checkout@v2
+
+      - name: Checkout workflowsawaiting repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.REPO_SCOPE_TOKEN }} # TODO: unnecessary once per1234/workflowsawaiting is public
+          repository: per1234/workflowsawaiting
+          path: ${{ env.SCRIPT_PATH }}
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: |
+          cd "${{ env.SCRIPT_PATH }}"
+          poetry install --no-dev --no-root
+
+      - name: Check for workflows awaiting approval
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPE_TOKEN }}
+        run: |
+          cd "${{ env.SCRIPT_PATH }}"
+          poetry run \
+            python \
+              workflowsawaiting.py \
+                --report-path "${{ env.REPORT_PATH }}" \
+                "${{ github.workspace }}/configuration.yml"
+
+      - name: Save report as workflow artifact
+        uses: actions/upload-artifact@v2
+        with:
+          if-no-files-found: error
+          path: ${{ env.REPORT_PATH }}
+          name: report
+
+      - name: Read report
+        id: read-report
+        run: |
+          echo "::set-output name=report::$(jq -c . "${{ env.REPORT_PATH }}")"
+
+      - name: Fail job if workflows are awaiting approval
+        if: fromJson(steps.read-report.outputs.report).summary.awaitingCount > 0
+        run: exit 1
