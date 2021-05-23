@@ -73,4 +73,6 @@ jobs:
 
       - name: Fail job if workflows are awaiting approval
         if: fromJson(steps.read-report.outputs.report).summary.awaitingCount > 0
-        run: exit 1
+        run: |
+          echo "::error::There are workflows awaiting approval"
+          exit 1
