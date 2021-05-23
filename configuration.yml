@@ -1,8 +1,9 @@
 # See: https://github.com/per1234/workflowsawaiting#configuration-file
 
-- name: 107-systems
-- name: aentinger/arduino-ci-status
-- name: arduino
-- name: Arduino-CI
-- name: arduino-libraries
-- name: snowfox-project
+- owner: 107-systems
+- owner: aentinger
+  repo: arduino-ci-status
+- owner: arduino
+- owner: Arduino-CI
+- owner: arduino-libraries
+- owner: snowfox-project
