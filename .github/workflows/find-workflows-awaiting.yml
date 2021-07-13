@@ -33,7 +33,6 @@ jobs:
       - name: Checkout workflowsawaiting repository
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.REPO_SCOPE_TOKEN }} # TODO: unnecessary once per1234/workflowsawaiting is public
           repository: per1234/workflowsawaiting
           path: ${{ env.SCRIPT_PATH }}
 
