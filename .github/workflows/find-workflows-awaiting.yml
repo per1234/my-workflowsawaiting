@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: per1234/workflowsawaiting
-          ref: dev  # TODO: this branch has a temporary workaround for a 404 issue. Remove this line once that is resolved.
+          ref: dev # TODO: this branch has a temporary workaround for a 404 issue. Remove this line once that is resolved.
           path: ${{ env.SCRIPT_PATH }}
 
       - name: Install Python
