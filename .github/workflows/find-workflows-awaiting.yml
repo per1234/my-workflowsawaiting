@@ -5,9 +5,11 @@ on:
   push:
     paths:
       - ".github/workflows/find-workflows-awaiting.ya?ml"
+      - "configuration.yml"
   pull_request:
     paths:
       - ".github/workflows/find-workflows-awaiting.ya?ml"
+      - "configuration.yml"
   schedule:
     # Run at the minimum interval allowed by GitHub Actions.
     - cron: "*/5 * * * *"
