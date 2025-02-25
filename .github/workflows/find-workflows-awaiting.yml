@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd "${{ env.SCRIPT_PATH }}"
-          poetry install --no-dev --no-root
+          poetry install --no-root --only main
 
       - name: Check for workflows awaiting approval
         env:
