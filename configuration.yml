@@ -2,5 +2,8 @@
 
 - owner: 107-systems
 - owner: arduino
+- owner: arduino
+  repo: docs-content
+  action: ignore
 - owner: Arduino-CI
 - owner: arduino-libraries
