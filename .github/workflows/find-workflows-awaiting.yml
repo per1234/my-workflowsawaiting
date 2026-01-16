@@ -35,7 +35,7 @@ jobs:
       - name: Checkout workflowsawaiting repository
         uses: actions/checkout@v6
         with:
-          repository: per1234/workflowsawaiting
+          repository: per1234-org/workflowsawaiting
           ref: main
           path: ${{ env.SCRIPT_PATH }}
 

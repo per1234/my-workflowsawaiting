@@ -4,4 +4,4 @@ The purpose of this repository is to host a scheduled workflow that checks the r
 
 For more information, see:
 
-https://github.com/per1234/workflowsawaiting
+https://github.com/per1234-org/workflowsawaiting
