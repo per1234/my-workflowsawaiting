@@ -30,10 +30,10 @@ jobs:
           echo "REPORT_PATH=${{ runner.temp }}/report.json" >> "$GITHUB_ENV"
 
       - name: Checkout repository to get the configuration file
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Checkout workflowsawaiting repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: per1234-org/workflowsawaiting
           ref: main
